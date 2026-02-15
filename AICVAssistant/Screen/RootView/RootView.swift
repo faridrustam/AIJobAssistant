@@ -15,7 +15,7 @@ struct RootView: View {
                     Label("Home", systemImage: "house")
                 }
 
-            Text("Files")
+            ATSCheckerView()
                 .tabItem {
                     Label("Files", systemImage: "folder")
                 }
