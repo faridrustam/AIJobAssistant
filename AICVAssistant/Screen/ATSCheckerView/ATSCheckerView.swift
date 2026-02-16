@@ -10,7 +10,7 @@ import SwiftUI
 struct ATSCheckerView: View {
     
     @State var fullText: String = "Paste the job description here..."
-    @StateObject private var vm = ATSCheckerVM()
+    @StateObject private var vm = ATSCheckerVM(manager: ChatService())
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -40,7 +40,7 @@ struct ATSCheckerView: View {
                     title: "Select Resume",
                     secondaryTitle: "Supports PDF, DOCX",
                     isUploaded: false,
-                    onChangeTap: nil 
+                    onChangeTap: nil
                 )
                 .padding(.horizontal)
                 .onTapGesture {

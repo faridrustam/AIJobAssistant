@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B75A7D2A2F43674200F2B6FB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B75A7D292F43674200F2B6FB /* Alamofire */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B75A7AFD2F38B2D400F2B6FB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B75A7D2A2F43674200F2B6FB /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = AICVAssistant;
 			packageProductDependencies = (
+				B75A7D292F43674200F2B6FB /* Alamofire */,
 			);
 			productName = AICVAssistant;
 			productReference = B75A7AEC2F38B2D200F2B6FB /* AICVAssistant.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = B75A7AE32F38B2D200F2B6FB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B75A7D282F43674200F2B6FB /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B75A7AED2F38B2D200F2B6FB /* Products */;
 			projectDirPath = "";
@@ -558,6 +567,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B75A7D282F43674200F2B6FB /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B75A7D292F43674200F2B6FB /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B75A7D282F43674200F2B6FB /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B75A7AE42F38B2D200F2B6FB /* Project object */;
 }
