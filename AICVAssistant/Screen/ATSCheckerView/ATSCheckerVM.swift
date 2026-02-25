@@ -12,8 +12,8 @@ final class ATSCheckerVM: ObservableObject {
     @Published var isImporterPresented = false
     @Published var isUploaded = false
     @Published var selectedFileURL: URL?
-    var success: (() -> Void)?
-    
+    @Published var jobTarget: String = ""
+
     private let manager: ChatService
     
     init(manager: ChatService) {
@@ -21,10 +21,11 @@ final class ATSCheckerVM: ObservableObject {
     }
     
     func sendRequest() {
-        manager.send(type: .nano, prompt: .atsScore(cv: "", job: ""), completion: { response in
+        let cv = PDFHelper.extractText(from: selectedFileURL ?? URL(fileURLWithPath: ""))
+        print(jobTarget)
+        manager.send(type: .nano, prompt: .atsScore(cv: cv, job: jobTarget), completion: { response in
             if let response {
                 print("Success \(response)")
-                self.success?()
             }
         })
     }

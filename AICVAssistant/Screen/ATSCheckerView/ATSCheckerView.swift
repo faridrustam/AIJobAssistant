@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ATSCheckerView: View {
     
-    @State var fullText: String = "Paste the job description here..."
     @StateObject private var vm = ATSCheckerVM(manager: ChatService())
     
     var body: some View {
@@ -54,14 +53,17 @@ struct ATSCheckerView: View {
                 .foregroundStyle(.gray)
                 .padding(.horizontal)
             
-            TextEditor(text: $fullText)
-                .padding(12)
-                .frame(height: 150)
-                .background(Color(.systemBackground))
-                .font(.system(size: 16))
-                .clipShape(.rect(cornerRadius: 16))
-                .shadow(color: .black.opacity(0.05),radius: 8)
-                .padding(.horizontal)
+            TextField(
+                "Enter your target job title",
+                text: $vm.jobTarget
+            )
+            .padding(12)
+            .frame(height: 60)
+            .background(Color(.systemBackground))
+            .font(.system(size: 16))
+            .clipShape(.rect(cornerRadius: 16))
+            .shadow(color: .black.opacity(0.05),radius: 8)
+            .padding(.horizontal)
             
             Text("Adding the job description helps our AI tailor the keywords analysis specifically for the role you are targeting.")
                 .font(.caption)
@@ -79,7 +81,7 @@ struct ATSCheckerView: View {
                 
                 VStack {
                     Button(action: {
-                        
+                        vm.sendRequest()
                     }, label: {
                         Text("💫 Analyze ATS Score")
                             .fontWeight(.bold)
@@ -109,12 +111,12 @@ struct ATSCheckerView: View {
         .background(Color.app)
         .navigationTitle("ATS Checker")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
         .fileImporter(isPresented: $vm.isImporterPresented, allowedContentTypes: [.pdf, .plainText], allowsMultipleSelection: false) { result in
             switch result {
             case .success(let urls):
                 if let fileURL = urls.first {
                     vm.selectedFileURL = fileURL
-                    print("Selected file: \(fileURL)")
                 }
             case .failure(let error):
                 print(error.localizedDescription)

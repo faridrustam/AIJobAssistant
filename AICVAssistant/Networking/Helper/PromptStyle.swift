@@ -28,7 +28,7 @@ enum PromptStyle {
             CV:
             \(cv)
 
-            Job Description:
+            Job Target:
             \(job)
             """
             
