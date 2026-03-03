@@ -12,7 +12,7 @@ enum PromptStyle {
     
     case atsScore(cv: String, job: String)
     case improveCV(cv: String)
-    case coverLetter(cv: String, job: String)
+    case coverLetter(cv: String, job: String, company: String, tone: String)
     
     var text: String {
         switch self {
@@ -22,6 +22,7 @@ enum PromptStyle {
 
             Analyze this CV and give:
             - ATS score (0-100)
+            - Critical warnings
             - Missing keywords
             - Suggestions
 
@@ -30,6 +31,19 @@ enum PromptStyle {
 
             Job Target:
             \(job)
+            
+            Return the result strictly in JSON format like this:
+
+            {
+              "score": 100,
+              "warnings": [
+                { "title": "...", "description": "..." }
+              ],
+              "missing_keywords": ["..."],
+              "suggestions": [
+                { "title": "...", "description": "..." }
+              ]
+            }
             """
             
         case .improveCV(let cv):
@@ -38,14 +52,20 @@ enum PromptStyle {
             \(cv)
             """
             
-        case .coverLetter(let cv, let job):
+        case .coverLetter(let cv, let job, let company, let tone):
             return """
-            Write a professional cover letter based on this CV and job description.
+            Write a tailored and compelling cover letter based on this CV, the job description, and the company information.
             CV:
             \(cv)
 
             Job:
             \(job)
+            
+            Company:
+            \(company)
+            
+            Write the cover letter like this tone:
+            \(tone)
             """
         }
     }

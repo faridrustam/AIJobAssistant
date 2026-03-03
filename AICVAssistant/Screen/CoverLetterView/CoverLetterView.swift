@@ -1,18 +1,52 @@
 //
-//  ATSCheckerView.swift
+//  CoverLetterView.swift
 //  AICVAssistant
 //
-//  Created by Farid Rustamov on 12.02.26.
+//  Created by Farid Rustamov on 26.02.26.
 //
 
 import SwiftUI
 
-struct ATSCheckerView: View {
+struct CoverLetterView: View {
     
-    @StateObject private var vm = ATSCheckerVM(manager: ChatService())
+    @StateObject private var vm = CoverLetterVM(manager: ChatService())
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
+            Text("TARGET ROLE")
+                .font(.caption)
+                .fontWeight(.regular)
+                .foregroundStyle(.black)
+                .padding(.horizontal)
+                .padding(.top, 12)
+            
+            VStack(spacing: 0) {
+                HStack(spacing: 20) {
+                    Text("Job Title")
+                        .font(.headline)
+                        .foregroundStyle(.black)
+                    
+                    TextField("e.g. Product Designer", text: $vm.jobTitle)
+                }
+                .padding()
+                .background(Color(.white))
+                
+                Divider()
+
+                HStack(spacing: 20) {
+                    Text("Company")
+                        .font(.headline)
+                        .foregroundStyle(.black)
+                    
+                    TextField("e.g. Acme Corp", text: $vm.company)
+                }
+                .padding()
+                .background(Color(.white))
+            }
+            .foregroundStyle(.background)
+            .cornerRadius(16)
+            .padding(.horizontal)
+            
             Text("UPLOAD RESUME")
                 .font(.caption)
                 .fontWeight(.regular)
@@ -32,7 +66,6 @@ struct ATSCheckerView: View {
                     }
                 )
                 .padding(.horizontal)
-
             } else {
                 DataImportCard(
                     image: "document.badge.plus.fill",
@@ -47,31 +80,27 @@ struct ATSCheckerView: View {
                 }
             }
             
-            Text("TARGET JOB (OPTIONAL)")
+            Text("TONE")
                 .font(.caption)
                 .fontWeight(.regular)
                 .foregroundStyle(.gray)
                 .padding(.horizontal)
+                .padding(.top, 12)
             
-            TextField(
-                "Enter your target job title",
-                text: $vm.jobTarget
-            )
-            .padding(12)
-            .frame(height: 60)
-            .background(Color(.systemBackground))
-            .font(.system(size: 16))
-            .clipShape(.rect(cornerRadius: 16))
-            .shadow(color: .black.opacity(0.05),radius: 8)
-            .padding(.horizontal)
-            
-            Text("Adding the job description helps our AI tailor the keywords analysis specifically for the role you are targeting.")
-                .font(.caption)
-                .fontWeight(.regular)
-                .foregroundStyle(.secondary)
+            ZStack {
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(.white)
+                    .frame(height: 60)
+                
+                Picker("Tone", selection: $vm.selectedTone) {
+                    Text("Professional").tag(Tone.professional)
+                    Text("Friendly").tag(Tone.friendly)
+                    Text("Confident").tag(Tone.confident)
+                }
+                .pickerStyle(.segmented)
                 .padding(.horizontal)
-            
-            Spacer()
+            }
+            .padding(.horizontal)
             
             ZStack {
                 Rectangle()
@@ -83,7 +112,7 @@ struct ATSCheckerView: View {
                     Button(action: {
                         vm.sendRequest()
                     }, label: {
-                        Text("💫 Analyze ATS Score")
+                        Text("💫 Generate Cover Letter")
                             .fontWeight(.bold)
                             .foregroundStyle(.white)
                             .frame(width: 300)
@@ -91,25 +120,11 @@ struct ATSCheckerView: View {
                             .background(Color.blue)
                             .cornerRadius(8)
                     })
-                    
-                    HStack(spacing: 4) {
-                        
-                        Image(systemName: "lock.fill")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .padding(.top, 4)
-                        
-                        Text("Files are processed securely and not stored.")
-                            .font(.caption)
-                            .fontWeight(.regular)
-                            .foregroundStyle(.secondary)
-                            .padding(.top, 4)
-                    }
                 }
             }
         }
         .background(Color.app)
-        .navigationTitle("ATS Checker")
+        .navigationTitle("Cover Letter")
         .navigationBarTitleDisplayMode(.inline)
         .fileImporter(isPresented: $vm.isImporterPresented, allowedContentTypes: [.pdf, .plainText], allowsMultipleSelection: false) { result in
             switch result {
@@ -125,5 +140,5 @@ struct ATSCheckerView: View {
 }
 
 #Preview {
-    ATSCheckerView()
+    CoverLetterView()
 }

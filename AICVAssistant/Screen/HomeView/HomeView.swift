@@ -74,7 +74,7 @@ struct HomeView: View {
                 case .cv:
                     Text("CV")
                 case .coverLetter:
-                    Text("Cover Letter")
+                    CoverLetterView()
                 case .ats:
                     ATSCheckerView()
                 }

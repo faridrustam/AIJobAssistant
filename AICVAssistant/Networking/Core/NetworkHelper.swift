@@ -16,8 +16,10 @@ enum EncodingType {
 class NetworkHelper {
     static let shared = NetworkHelper()
     
+    private init() {}
+    
     let baseURL = "https://api.openai.com/v1"
-    let header: HTTPHeaders = ["Authorization": "Bearer "]
+    let header: HTTPHeaders = ["Authorization": "Bearer \(Config.openAIKey)"]
     
     func chatCompletions() -> String {
             return baseURL + "/chat/completions"
