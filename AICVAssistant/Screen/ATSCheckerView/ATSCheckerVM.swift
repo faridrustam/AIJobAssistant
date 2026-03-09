@@ -15,15 +15,15 @@ final class ATSCheckerVM: ObservableObject {
     @Published var jobTarget: String = ""
     @Published var result: ATSResponse?
 
-    private let manager: ChatService
+    private let manager: ATSCheckerManager
     
-    init(manager: ChatService) {
+    init(manager: ATSCheckerManager) {
         self.manager = manager
     }
     
     func sendRequest() {
         let cv = PDFHelper.extractText(from: selectedFileURL ?? URL(fileURLWithPath: ""))
-        manager.send(type: .nano, prompt: .atsScore(cv: cv, job: jobTarget), completion: { response  in
+        manager.sendATS(type: .nano, prompt: .atsScore(cv: cv, job: jobTarget), completion: { response  in
             if let response {
                 self.result = response
                 print(self.result ?? "")

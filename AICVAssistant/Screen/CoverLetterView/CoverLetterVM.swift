@@ -23,16 +23,17 @@ final class CoverLetterVM: ObservableObject {
     @Published var selectedTone: Tone = .professional
     @Published var result: String = ""
 
-    private let manager: ChatService
+    private let manager: CoverLetterManager
     
-    init(manager: ChatService) {
+    init(manager: CoverLetterManager) {
         self.manager = manager
     }
     
     func sendRequest() {
         let cv = PDFHelper.extractText(from: selectedFileURL ?? URL(fileURLWithPath: ""))
-        manager.send(type: .nano, prompt: .coverLetter(cv: cv, job: jobTitle, company: company, tone: selectedTone.rawValue), completion: { response  in
+        manager.sendCoverLetter(type: .nano, prompt: .coverLetter(cv: cv, job: jobTitle, company: company, tone: selectedTone.rawValue), completion: { response  in
             if let response {
+                self.result = response
                 print("Success \(response)")
             }
         })

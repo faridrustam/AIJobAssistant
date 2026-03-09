@@ -8,7 +8,10 @@
 import Foundation
 
 final class ChatService {
-    func send(type: GptType, prompt: PromptStyle, completion: @escaping (ATSResponse?) -> Void) {
+    func send<T>(type: GptType,
+                 prompt: PromptStyle,
+                 expecting: T.Type,
+                 completion: @escaping (T?) -> Void) {
         let body = OpenAIRequest(model: type.rawValue,
                                  messages: [Message(role: "user", content: prompt.text)])
         
@@ -17,6 +20,11 @@ final class ChatService {
                                  responseModel: OpenAIResponse.self) { response, _ in
             guard let content = response?.choices?.first?.message?.content else {
                 completion(nil)
+                return
+            }
+            
+            if T.self == String.self {
+                completion((content as! T))
                 return
             }
             
@@ -29,11 +37,15 @@ final class ChatService {
                 return
             }
             
-            do {
-                let decoded = try JSONDecoder().decode(ATSResponse.self, from: data)
-                completion(decoded)
-            } catch {
-                print("Decoding error:", error)
+            if let decodableType = T.self as? Decodable.Type {
+                do {
+                    let decoded = try JSONDecoder().decode(decodableType, from: data)
+                    completion(decoded as? T)
+                } catch {
+                    print("Decoding error:", error)
+                    completion(nil)
+                }
+            } else {
                 completion(nil)
             }
         }

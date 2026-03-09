@@ -11,74 +11,76 @@ struct HomeView: View {
     @StateObject var viewModel = HomeVM()
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 32) {
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("AI Job Assistant")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundStyle(LinearGradient(
-                            colors: [.blue, .purple],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing))
+            ScrollView {
+                VStack(alignment: .leading, spacing: 32) {
                     
-                    Text("Optimize your career journey")
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .foregroundStyle(.secondary)
-                }
-                .padding(.top, 24)
-                .padding(.leading, 16)
-                
-                VStack(alignment: .center, spacing: 16) {
-                    ForEach(viewModel.features) { feature in
-                        NavigationLink(value: feature.featureType) {
-                            FeatureCard(feature: feature)
-                                .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-                
-                VStack(spacing: 16) {
-                    HStack {
-                        Text("Recent Documents")
-                            .font(.system(size: 20))
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("AI Job Assistant")
+                            .font(.largeTitle)
                             .fontWeight(.bold)
+                            .foregroundStyle(LinearGradient(
+                                colors: [.blue, .purple],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing))
                         
-                        Spacer()
-                        
-                        Button("See All") {}
+                        Text("Optimize your career journey")
                             .font(.subheadline)
-                            .fontWeight(.semibold)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.top, 24)
+                    .padding(.leading, 16)
+                    
+                    VStack(alignment: .center, spacing: 16) {
+                        ForEach(viewModel.features) { feature in
+                            NavigationLink(value: feature.featureType) {
+                                FeatureCard(feature: feature)
+                                    .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            DocumentCard()
-                            DocumentCard()
-                            DocumentCard()
+                    VStack(spacing: 16) {
+                        HStack {
+                            Text("Recent Documents")
+                                .font(.system(size: 20))
+                                .fontWeight(.bold)
+                            
+                            Spacer()
+                            
+                            Button("See All") {}
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
                         }
-                        .padding(.horizontal)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 16) {
+                                DocumentCard()
+                                DocumentCard()
+                                DocumentCard()
+                            }
+                            .padding(.horizontal)
+                        }
+                        .frame(height: 250)
+                        .padding(.horizontal, -16)
                     }
-                    .frame(height: 250)
-                    .padding(.horizontal, -16)
+                    
+                    Spacer()
                 }
-                
-                Spacer()
+                .padding(.horizontal, 24)
+                .navigationDestination(for: FeatureType.self) { type in
+                    switch type {
+                    case .cv:
+                        Text("CV")
+                    case .coverLetter:
+                        CoverLetterView()
+                    case .ats:
+                        ATSCheckerView()
+                    }
+                }
             }
-            .padding()
             .background(Color.app)
-            .navigationDestination(for: FeatureType.self) { type in
-                switch type {
-                case .cv:
-                    Text("CV")
-                case .coverLetter:
-                    CoverLetterView()
-                case .ats:
-                    ATSCheckerView()
-                }
-            }
         }
     }
 }

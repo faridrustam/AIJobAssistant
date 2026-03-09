@@ -54,7 +54,7 @@ enum PromptStyle {
             
         case .coverLetter(let cv, let job, let company, let tone):
             return """
-            Write a tailored and compelling cover letter based on this CV, the job description, and the company information.
+            Write a tailored and compelling cover letter based on this CV, the job description, and the company information. Do not type date.
             CV:
             \(cv)
 
