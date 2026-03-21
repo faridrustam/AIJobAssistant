@@ -15,7 +15,7 @@ struct RootView: View {
                     Label("Home", systemImage: "house")
                 }
 
-            ATSCheckerView()
+            ATSCheckResultView(data: ATSResponse(score: 70, warnings: [Warning(title: "Salam", description: "")], missingKeywords: [""], suggestions: [Suggestion(title: "", description: "")]))
                 .tabItem {
                     Label("Files", systemImage: "folder")
                 }

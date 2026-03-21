@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ATSCheckerView: View {
-    
     @StateObject private var vm = ATSCheckerVM(manager: ATSCheckerManager())
     
     var body: some View {
@@ -21,32 +20,7 @@ struct ATSCheckerView: View {
                     .padding(.horizontal)
                     .padding(.top, 12)
                 
-                if let fileURL = vm.selectedFileURL {
-                    DataImportCard(
-                        image: "checkmark.circle.fill",
-                        title: "Resume Uploaded",
-                        secondaryTitle: fileURL.lastPathComponent,
-                        isUploaded: true,
-                        onChangeTap: {
-                            vm.isImporterPresented = true
-                            print(vm.isImporterPresented)
-                        }
-                    )
-                    .padding(.horizontal)
-                    
-                } else {
-                    DataImportCard(
-                        image: "document.badge.plus.fill",
-                        title: "Select Resume",
-                        secondaryTitle: "Supports PDF, DOCX",
-                        isUploaded: false,
-                        onChangeTap: nil
-                    )
-                    .padding(.horizontal)
-                    .onTapGesture {
-                        vm.isImporterPresented = true
-                    }
-                }
+                importerCard
                 
                 Text("TARGET JOB (OPTIONAL)")
                     .font(.caption)
@@ -73,7 +47,7 @@ struct ATSCheckerView: View {
                     .padding(.horizontal)
                 
                 Spacer()
-                    
+                
                 VStack {
                     Button(action: {
                         vm.sendRequest()
@@ -95,6 +69,9 @@ struct ATSCheckerView: View {
                 }.padding(.vertical, 32)
             }
             .navigationTitle("ATS Checker")
+            .navigationDestination(isPresented: $vm.isLoaded, destination: {
+                ATSCheckResultView(data: vm.result ?? ATSResponse(score: 0, warnings: [Warning(title: "", description: "")], missingKeywords: [""], suggestions: [Suggestion(title: "", description: "")]))
+            })
             .navigationBarTitleDisplayMode(.inline)
             .fileImporter(isPresented: $vm.isImporterPresented, allowedContentTypes: [.pdf, .plainText], allowsMultipleSelection: false) { result in
                 switch result {
@@ -108,6 +85,41 @@ struct ATSCheckerView: View {
             }
         }
         .background(Color.app)
+    }
+}
+
+private extension ATSCheckerView {
+    var importerCard: AnyView {
+        if let fileURL = vm.selectedFileURL {
+            AnyView(
+                DataImportCard(
+                    image: "checkmark.circle.fill",
+                    title: "Resume Uploaded",
+                    secondaryTitle: fileURL.lastPathComponent,
+                    isUploaded: true,
+                    onChangeTap: {
+                        vm.isImporterPresented = true
+                        print(vm.isImporterPresented)
+                    }
+                )
+                .padding(.horizontal)
+            )
+            
+        } else {
+            AnyView(
+                DataImportCard(
+                    image: "document.badge.plus.fill",
+                    title: "Select Resume",
+                    secondaryTitle: "Supports PDF, DOCX",
+                    isUploaded: false,
+                    onChangeTap: nil
+                )
+                .padding(.horizontal)
+                .onTapGesture {
+                    vm.isImporterPresented = true
+                }
+            )
+        }
     }
 }
 

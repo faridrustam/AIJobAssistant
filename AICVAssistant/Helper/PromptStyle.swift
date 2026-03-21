@@ -22,9 +22,9 @@ enum PromptStyle {
 
             Analyze this CV and give:
             - ATS score (0-100)
-            - Critical warnings
+            - Critical warnings (give minimum 3 reason)
             - Missing keywords
-            - Suggestions
+            - Suggestions (Type short and concrete)
 
             CV:
             \(cv)
@@ -39,7 +39,7 @@ enum PromptStyle {
               "warnings": [
                 { "title": "...", "description": "..." }
               ],
-              "missing_keywords": ["..."],
+              "missingKeywords": ["..."],
               "suggestions": [
                 { "title": "...", "description": "..." }
               ]

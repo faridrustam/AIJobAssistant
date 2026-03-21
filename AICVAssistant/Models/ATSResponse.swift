@@ -10,7 +10,7 @@ import Foundation
 struct ATSResponse: Codable {
     let score: Int
     let warnings: [Warning]
-    let missing_keywords: [String]
+    let missingKeywords: [String]
     let suggestions: [Suggestion]
 }
 

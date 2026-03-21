@@ -14,6 +14,7 @@ final class ATSCheckerVM: ObservableObject {
     @Published var selectedFileURL: URL?
     @Published var jobTarget: String = ""
     @Published var result: ATSResponse?
+    @Published var isLoaded: Bool = false
 
     private let manager: ATSCheckerManager
     
@@ -26,6 +27,7 @@ final class ATSCheckerVM: ObservableObject {
         manager.sendATS(type: .nano, prompt: .atsScore(cv: cv, job: jobTarget), completion: { response  in
             if let response {
                 self.result = response
+                self.isLoaded = true
                 print(self.result ?? "")
             }
         })

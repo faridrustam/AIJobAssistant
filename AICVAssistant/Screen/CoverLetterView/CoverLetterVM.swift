@@ -22,6 +22,7 @@ final class CoverLetterVM: ObservableObject {
     @Published var company: String = ""
     @Published var selectedTone: Tone = .professional
     @Published var result: String = ""
+    @Published var isLoaded: Bool = false
 
     private let manager: CoverLetterManager
     
@@ -34,6 +35,7 @@ final class CoverLetterVM: ObservableObject {
         manager.sendCoverLetter(type: .nano, prompt: .coverLetter(cv: cv, job: jobTitle, company: company, tone: selectedTone.rawValue), completion: { response  in
             if let response {
                 self.result = response
+                self.isLoaded = true
                 print("Success \(response)")
             }
         })

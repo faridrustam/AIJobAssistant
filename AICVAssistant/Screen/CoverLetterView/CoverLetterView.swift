@@ -123,6 +123,9 @@ struct CoverLetterView: View {
                 .padding(.horizontal, 24)
             }
             .navigationTitle("Cover Letter")
+            .navigationDestination(isPresented: $vm.isLoaded, destination: {
+                CoverLetterResultView(data: vm.result)
+            })
             .navigationBarTitleDisplayMode(.inline)
             .fileImporter(isPresented: $vm.isImporterPresented, allowedContentTypes: [.pdf, .plainText], allowsMultipleSelection: false) { result in
                 switch result {
