@@ -15,7 +15,6 @@ struct ATSCheckResultView: View {
             VStack(alignment: .leading, spacing: 12) {
                 CircularScore(score: Double(data.score))
                     .frame(maxWidth: .infinity)
-                    .padding(.top, 24)
                 
                 Text("Critical Warnings")
                     .font(.system(size: 18))
@@ -26,8 +25,7 @@ struct ATSCheckResultView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         CriticalWarningCard(title: warning.title, description: warning.description)
                     }
-                }
-                
+                }     
             }.navigationTitle("ATS Analysis")
         }
     }

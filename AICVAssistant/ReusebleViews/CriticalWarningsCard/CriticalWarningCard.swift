@@ -24,7 +24,6 @@ struct CriticalWarningCard: View {
                 .frame(width: 16)
            
             HStack(alignment: .top, spacing: 12) {
-                
                 Image(systemName: "exclamationmark.triangle")
                     .foregroundColor(.orange)
                     .font(.title3)
@@ -44,7 +43,7 @@ struct CriticalWarningCard: View {
             }
             .padding()
         }
-        .frame(minHeight: 140, maxHeight: 200)
+        .frame(minHeight: 140)
         .padding(.horizontal)
     }
 }

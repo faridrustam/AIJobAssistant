@@ -39,35 +39,46 @@ struct CircularScore: View {
     }
     
     var body: some View {
-        ZStack {
-            Circle()
-                .stroke(Color.gray.opacity(0.2), lineWidth: 14)
-            
-            Circle()
-                .trim(from: 0, to: animatedProgress)
-                .stroke(
-                    Color.blue,
-                    style: StrokeStyle(lineWidth: 14, lineCap: .round)
-                )
-                .rotationEffect(.degrees(-90))
-                .animation(.easeOut(duration: 1.2), value: animatedProgress)
-            
-            VStack(spacing: 4) {
-                Text("\(Int(score))")
-                    .font(.system(size: 40, weight: .bold))
+        VStack {
+            ZStack {
+                Circle()
+                    .stroke(Color.gray.opacity(0.2), lineWidth: 14)
                 
-                Text("/\(Int(maxScore))")
-                    .foregroundColor(.gray)
+                Circle()
+                    .trim(from: 0, to: animatedProgress)
+                    .stroke(
+                        Color.blue,
+                        style: StrokeStyle(lineWidth: 14, lineCap: .round)
+                    )
+                    .rotationEffect(.degrees(-90))
+                    .animation(.easeOut(duration: 1.2), value: animatedProgress)
                 
-                Text("\(giveFeedback(Int(score)))")
-                    .font(.callout)
-                    .foregroundColor(.blue)
+                VStack(spacing: 4) {
+                    Text("\(Int(score))")
+                        .font(.system(size: 40, weight: .bold))
+                    
+                    Text("/\(Int(maxScore))")
+                        .foregroundColor(.gray)
+                    
+                    Text("\(giveFeedback(Int(score)))")
+                        .font(.callout)
+                        .foregroundColor(.blue)
+                }
             }
-        }
-        .frame(width: 200, height: 200)
-        .onAppear {
-            animatedProgress = progress
-        }
+            .onAppear {
+                animatedProgress = progress
+            }
+            
+            Text("ATS-style compatibility score")
+                .padding()
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                
+        }.frame(width: 280, height: 230)
+            .padding(32)
+            .background(Color(.systemBackground))
+            .cornerRadius(16)
+            .shadow(color: .black.opacity(0.05), radius: 8)
     }
 }
 

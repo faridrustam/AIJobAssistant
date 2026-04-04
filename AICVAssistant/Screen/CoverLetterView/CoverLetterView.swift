@@ -138,6 +138,9 @@ struct CoverLetterView: View {
                 }
             }
         }.background(Color(.app))
+            .onTapGesture {
+                hideKeyboard()
+            }
     }
 }
 

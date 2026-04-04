@@ -70,7 +70,9 @@ struct ATSCheckerView: View {
             }
             .navigationTitle("ATS Checker")
             .navigationDestination(isPresented: $vm.isLoaded, destination: {
-                ATSCheckResultView(data: vm.result ?? ATSResponse(score: 0, warnings: [Warning(title: "", description: "")], missingKeywords: [""], suggestions: [Suggestion(title: "", description: "")]))
+                if let data = vm.result {
+                    ATSCheckResultView(data: data)
+                }
             })
             .navigationBarTitleDisplayMode(.inline)
             .fileImporter(isPresented: $vm.isImporterPresented, allowedContentTypes: [.pdf, .plainText], allowsMultipleSelection: false) { result in
@@ -85,6 +87,9 @@ struct ATSCheckerView: View {
             }
         }
         .background(Color.app)
+        .onTapGesture {
+            hideKeyboard()
+        }
     }
 }
 
@@ -102,8 +107,7 @@ private extension ATSCheckerView {
                         print(vm.isImporterPresented)
                     }
                 )
-                .padding(.horizontal)
-            )
+                .padding(.horizontal))
             
         } else {
             AnyView(

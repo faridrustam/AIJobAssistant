@@ -24,7 +24,7 @@ enum PromptStyle {
             - ATS score (0-100)
             - Critical warnings (give minimum 3 reason)
             - Missing keywords
-            - Suggestions (Type short and concrete)
+            - Suggestions (Type short and concrete) (give minimum 3 suggestion)
 
             CV:
             \(cv)
